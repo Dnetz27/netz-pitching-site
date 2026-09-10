@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Netz Pitching Development — Remote Pitching Coaching</title>
+<meta name="description" content="Remote pitching development for high school and college pitchers. Movement efficiency, workload management, arsenal development, and return-to-throw programs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;600;700;800;900&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#FFFFFF;
+    --ink-2:#F4F5F5;
+    --panel:#F1F2F2;
+    --chalk:#13161A;
+    --chalk-dim:#4B5563;
+    --clay:#F5316F;
+    --clay-bright:#FF5C93;
+    --lume:#22D3C5;
+    --lume-deep:#0F766E;
+    --mist:#C7CCCB;
+    --steel:#CDD1D0;
+    --steel-line: rgba(34,211,197,0.18);
+    --maxw: 1120px;
+    --pad: clamp(20px, 5vw, 64px);
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; scroll-padding-top:84px; }
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--chalk);
+    font-family:'Work Sans', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; text-decoration:none; }
+  h1,h2,h3{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:800;
+    line-height:0.98;
+    margin:0;
+    letter-spacing:0.2px;
+  }
+  p{ margin:0; }
+  ul{ margin:0; padding:0; list-style:none; }
+  button{ font-family:inherit; cursor:pointer; }
+
+  :focus-visible{
+    outline:2px solid var(--lume);
+    outline-offset:3px;
+  }
+
+  .container{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 var(--pad);
+  }
+
+  .eyebrow-num{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:700;
+    color:var(--lume);
+    font-size:14px;
+    letter-spacing:0.08em;
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--steel);
+  }
+  .nav-wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:16px var(--pad);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+  }
+  .logo{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:800;
+    font-size:22px;
+    letter-spacing:0.02em;
+    white-space:nowrap;
+  }
+  .logo span{ color:var(--lume-deep); }
+  nav.links{
+    display:flex;
+    align-items:center;
+    gap:30px;
+  }
+  nav.links a{
+    font-size:15px;
+    font-weight:500;
+    color:var(--chalk-dim);
+    transition:color .15s ease;
+  }
+  nav.links a:hover{ color:var(--chalk); }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:11px 22px;
+    border-radius:3px;
+    font-weight:600;
+    font-size:14.5px;
+    border:1px solid transparent;
+    transition:transform .15s ease, background .15s ease, border-color .15s ease;
+    white-space:nowrap;
+  }
+  .btn-primary{
+    background:var(--clay);
+    color:#FFFFFF;
+  }
+  .btn-primary:hover{ background:var(--clay-bright); transform:translateY(-1px); }
+  .btn-ghost{
+    border-color:rgba(255,255,255,0.4);
+    color:var(--ink);
+  }
+  .btn-ghost:hover{ border-color:var(--lume); color:var(--lume); }
+
+  .nav-cta{ flex-shrink:0; }
+  .menu-toggle{
+    display:none;
+    background:none; border:1px solid var(--steel); border-radius:3px;
+    color:var(--chalk); padding:8px 10px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    min-height:640px;
+    padding:72px var(--pad);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    background:
+      radial-gradient(ellipse 900px 500px at 82% -10%, rgba(245,49,111,0.16), transparent 60%),
+      linear-gradient(100deg, rgba(11,11,12,0.93) 15%, rgba(11,11,12,0.65) 100%),
+      url('hero-action.jpg') center 22% / cover no-repeat;
+  }
+  .hero-inner{
+    max-width:var(--maxw);
+    margin:0 auto;
+    position:relative;
+    z-index:2;
+  }
+  .hero h1{
+    font-size:clamp(34px, 5.2vw, 60px);
+    max-width:26ch;
+    color:var(--ink);
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--lume);
+  }
+  .hero .sub{
+    margin-top:26px;
+    max-width:52ch;
+    font-size:19px;
+    color:var(--mist);
+  }
+  .hero .pillars{
+    margin-top:64px;
+    display:flex;
+    gap:0;
+    border-top:1px solid rgba(255,255,255,0.25);
+    padding-top:22px;
+    flex-wrap:wrap;
+  }
+  .hero .pillars a{
+    flex:1 1 200px;
+    padding:6px 24px 6px 0;
+    font-size:14.5px;
+    font-weight:600;
+    color:var(--mist);
+    border-left:2px solid var(--steel-line);
+    padding-left:16px;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .hero .pillars a:first-child{ border-left:2px solid var(--steel-line); }
+  .hero .pillars a:hover{ color:var(--lume); border-left-color:var(--lume); }
+
+  /* ---------- SECTION shared ---------- */
+  section{ padding:88px var(--pad); }
+  .section-head{
+    max-width:60ch;
+    margin-bottom:56px;
+  }
+  .section-head h2{
+    font-size:clamp(30px, 4vw, 44px);
+    color:var(--chalk);
+  }
+  .section-head p{
+    margin-top:16px;
+    color:var(--chalk-dim);
+    font-size:17px;
+    max-width:56ch;
+  }
+
+  /* ---------- FOCUS AREAS ---------- */
+  .focus{ background:var(--panel); }
+  .focus-grid{
+    max-width:var(--maxw);
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:0;
+  }
+  .focus-col{
+    padding:0 32px;
+    border-left:1px solid var(--steel);
+  }
+  .focus-col:first-child{ border-left:1px solid var(--steel); padding-left:0; }
+  .focus-col .icon{ margin-bottom:22px; }
+  .focus-col h3{
+    font-size:24px;
+    color:var(--chalk);
+    margin-bottom:14px;
+    font-weight:700;
+  }
+  .focus-col p{
+    color:var(--chalk-dim);
+    font-size:15.5px;
+  }
+
+  /* ---------- RETURN TO THROW ---------- */
+  .rtp{
+    background:
+      linear-gradient(180deg, rgba(245,49,111,0.07), transparent 40%),
+      var(--ink);
+    border-top:1px solid var(--steel);
+    border-bottom:1px solid var(--steel);
+  }
+  .rtp-note{
+    display:inline-block;
+    font-size:14px;
+    color:var(--chalk-dim);
+    border:1px solid var(--steel);
+    padding:8px 14px;
+    border-radius:3px;
+    margin-top:8px;
+  }
+  .phases{
+    max-width:var(--maxw);
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:28px;
+    position:relative;
+  }
+  .phases::before{
+    content:"";
+    position:absolute;
+    top:23px; left:0; right:0;
+    height:1px;
+    background:var(--steel);
+    z-index:0;
+  }
+  .phase{ position:relative; z-index:1; }
+  .phase .num{
+    width:46px; height:46px;
+    border-radius:50%;
+    background:var(--ink);
+    border:2px solid var(--clay);
+    color:var(--chalk);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:800;
+    font-size:20px;
+    margin-bottom:20px;
+  }
+  .phase h3{
+    font-size:19px;
+    color:var(--chalk);
+    margin-bottom:10px;
+    font-weight:700;
+  }
+  .phase p{
+    font-size:14.5px;
+    color:var(--chalk-dim);
+  }
+
+  /* ---------- CASE STUDY ---------- */
+  .case{ background:var(--panel); }
+  .case-grid{
+    max-width:var(--maxw);
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1.35fr 1fr;
+    gap:64px;
+    align-items:start;
+  }
+  .case-copy h2{
+    font-size:clamp(28px, 3.6vw, 40px);
+    margin-bottom:22px;
+  }
+  .case-copy p{
+    color:var(--chalk-dim);
+    font-size:17px;
+    margin-bottom:18px;
+  }
+  .case-copy p:last-child{ margin-bottom:0; }
+  .case-copy .name-tag{
+    font-size:14px;
+    letter-spacing:0.03em;
+    color:var(--lume-deep);
+    font-weight:600;
+    margin-bottom:14px;
+    display:block;
+  }
+  .stat-box{
+    background:var(--ink);
+    border:1px solid var(--steel);
+    border-radius:4px;
+    padding:30px;
+  }
+  .stat-box .stat{
+    padding:18px 0;
+    border-bottom:1px solid var(--steel);
+  }
+  .stat-box .stat:last-child{ border-bottom:none; padding-bottom:0; }
+  .stat-box .stat:first-child{ padding-top:0; }
+  .stat-box .stat .big{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:800;
+    font-size:30px;
+    color:var(--lume-deep);
+    line-height:1;
+  }
+  .stat-box .stat .label{
+    margin-top:8px;
+    font-size:13.5px;
+    color:var(--chalk-dim);
+  }
+
+  /* ---------- COACHES ---------- */
+  .coaches{ background:var(--ink); }
+  .coach-grid{
+    max-width:var(--maxw);
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:32px;
+  }
+  .coach-card{
+    background:var(--chalk);
+    color:var(--ink);
+    border-radius:6px;
+    overflow:hidden;
+  }
+  .coach-photo{
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    display:block;
+  }
+  .coach-body{
+    padding:28px 32px 34px;
+  }
+  .coach-card h3{
+    font-size:24px;
+    font-weight:800;
+    color:var(--ink);
+  }
+  .coach-card .role{
+    font-size:14px;
+    font-weight:600;
+    color:var(--clay);
+    margin-top:4px;
+    margin-bottom:18px;
+    display:block;
+  }
+  .coach-card p{
+    font-size:15px;
+    color:var(--mist);
+  }
+
+  /* ---------- BOOK ---------- */
+  .book{
+    background:var(--panel);
+    border-top:1px solid var(--steel);
+  }
+  .book .section-head{ max-width:640px; margin-left:auto; margin-right:auto; text-align:center; }
+  .book .section-head p{ margin-left:auto; margin-right:auto; }
+  .calendly-wrap{
+    max-width:760px;
+    margin:0 auto;
+    background:var(--ink);
+    border:1px solid var(--steel);
+    border-radius:6px;
+    padding:8px;
+  }
+  .calendly-inline-widget{ min-width:280px; height:700px; }
+  .book-fallback{
+    text-align:center;
+    margin-top:22px;
+    font-size:14.5px;
+    color:var(--chalk-dim);
+  }
+  .book-fallback a{ color:var(--lume-deep); font-weight:600; }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding:44px var(--pad) 56px;
+    border-top:1px solid var(--steel);
+  }
+  .footer-inner{
+    max-width:var(--maxw);
+    margin:0 auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+  .footer-inner .logo{ font-size:18px; }
+  .socials{ display:flex; gap:22px; }
+  .socials a{ font-size:14px; color:var(--chalk-dim); }
+  .socials a:hover{ color:var(--lume-deep); }
+  footer .fine{
+    margin-top:26px;
+    font-size:12.5px;
+    color:var(--chalk-dim);
+    max-width:var(--maxw);
+    margin-left:auto; margin-right:auto;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .focus-grid{ grid-template-columns:1fr; gap:40px; }
+    .focus-col{ border-left:none; border-top:1px solid var(--steel); padding:32px 0 0; }
+    .focus-col:first-child{ border-top:none; padding-top:0; }
+    .phases{ grid-template-columns:1fr; gap:36px; }
+    .phases::before{ display:none; }
+    .case-grid{ grid-template-columns:1fr; gap:40px; }
+    .coach-grid{ grid-template-columns:1fr; }
+  }
+  @media (max-width:760px){
+    .hero{ min-height:480px; }
+    nav.links{ display:none; }
+    .menu-toggle{ display:inline-flex; }
+    body.menu-open nav.links{
+      display:flex;
+      position:absolute;
+      top:100%; left:0; right:0;
+      background:var(--ink-2);
+      border-bottom:1px solid var(--steel);
+      flex-direction:column;
+      align-items:flex-start;
+      gap:0;
+      padding:8px 0;
+    }
+    body.menu-open nav.links a{
+      width:100%;
+      padding:14px var(--pad);
+      border-bottom:1px solid var(--steel);
+    }
+    .hero .pillars{ flex-direction:column; }
+    .hero .pillars a{ border-left:none; border-top:1px solid var(--steel-line); padding:14px 0 0; }
+    .hero .pillars a:first-child{ border-top:none; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <div class="logo">NETZ<span>PITCHING</span></div>
+    <nav class="links">
+      <a href="#focus-areas">Focus Areas</a>
+      <a href="#return-to-throw">Return to Throw</a>
+      <a href="#case-study">Case Study</a>
+      <a href="#coaches">Coaches</a>
+    </nav>
+    <div class="nav-cta" style="display:flex; align-items:center; gap:10px;">
+      <a href="#book" class="btn btn-primary">Book a Call</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Modern Tools for Your Development.</h1>
+    <p class="sub">Objective plans for pitchers who want to push beyond internal cues and find external results.</p>
+    <div class="pillars">
+      <a href="#focus-areas">Moving Efficiently</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOCUS AREAS ============ -->
+<section class="focus" id="focus-areas">
+  <div class="section-head" style="max-width:var(--maxw); margin-left:auto; margin-right:auto;">
+    <h2>Three things separate a live arm from a complete one.</h2>
+    <p>Velocity gets a pitcher a look. These three areas are what keep him effective, healthy, and on the mound long enough to matter.</p>
+  </div>
+
+  <div class="focus-grid">
+    <div class="focus-col">
+      <div class="icon">
+        <svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 38 C 14 30, 18 20, 24 16 S 36 10, 40 6" stroke="var(--lume)" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="6" cy="38" r="3.4" fill="var(--lume)"/>
+          <circle cx="24" cy="16" r="3.4" fill="var(--lume)"/>
+          <circle cx="40" cy="6" r="3.4" fill="var(--lume)"/>
+        </svg>
+      </div>
+      <h3>Moving More Efficiently</h3>
+      <p>Most velocity ceilings and arm health problems trace back to how force moves through the body, not how hard someone tries to throw. We use frame-by-frame video assessment to find where a delivery is leaking energy, and fix the one or two things that actually move the needle instead of rebuilding a delivery from scratch.</p>
+    </div>
+
+    <div class="focus-col">
+      <div class="icon">
+        <svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 40 V 20 M16 40 V 12 M26 40 V 24 M36 40 V 6" stroke="var(--lume)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3>Workload Management</h3>
+      <p>Arm health isn't luck, it's math — pitch counts, intensity, and recovery, tracked across the full year instead of just game day. We build a throwing calendar around the season so it's clear exactly when to push and when to back off.</p>
+    </div>
+
+    <div class="focus-col">
+      <div class="icon">
+        <svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="23" cy="23" r="4" fill="var(--lume)"/>
+          <path d="M23 23 C 30 18, 36 16, 40 10" stroke="var(--lume)" stroke-width="2" stroke-linecap="round"/>
+          <path d="M23 23 C 30 26, 34 32, 34 40" stroke="var(--lume)" stroke-width="2" stroke-linecap="round"/>
+          <path d="M23 23 C 15 24, 9 30, 6 36" stroke="var(--lume)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3>Arsenal Development</h3>
+      <p>Two pitches get through a lineup once. A true arsenal — a fastball that plays off a shape-distinct breaking ball and a changeup hitters can't sit on — is what keeps a pitcher effective the third time through. We build usage plans around what a pitcher's specific shapes actually do, not a generic mix.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RETURN TO THROW ============ -->
+<section class="rtp" id="return-to-throw">
+  <div class="section-head" style="max-width:var(--maxw); margin-left:auto; margin-right:auto;">
+    <h2>Return to throw is its own program.</h2>
+    <p>Coming back from an arm injury isn't a shortcut version of a healthy training plan — it's a different program, built in phases, with health as the first priority.</p>
+    <span class="rtp-note">Built alongside your athletic trainer or physician's clearance timeline — not a replacement for medical care.</span>
+  </div>
+
+  <div class="phases">
+    <div class="phase">
+      <div class="num">1</div>
+      <h3>Foundation &amp; Clearance</h3>
+      <p>Pain-free range of motion and arm care rebuilt from the ground up, aligned with your provider's clearance to begin throwing.</p>
+    </div>
+    <div class="phase">
+      <div class="num">2</div>
+      <h3>Reintroducing Throws</h3>
+      <p>A structured catch-play progression. Distance and intensity increase on a schedule, not on a feeling.</p>
+    </div>
+    <div class="phase">
+      <div class="num">3</div>
+      <h3>Mound Progression</h3>
+      <p>Bullpens rebuilt from flat ground up. Volume and intent climb gradually as mechanics and arm health are re-confirmed at each step.</p>
+    </div>
+    <div class="phase">
+      <div class="num">4</div>
+      <h3>Return to Competition</h3>
+      <p>Live at-bats with workload monitored closely through the first weeks back on the mound.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CASE STUDY ============ -->
+<section class="case" id="case-study">
+  <div class="case-grid">
+    <div class="case-copy">
+      <span class="name-tag">Case Study</span>
+      <h2>The player behind the program.</h2>
+      <p>I played five years of college baseball with results that never matched the effort. I walked away for a year. When I came back, I stopped training like a guy trying to copy someone else's delivery and started actually studying my own — pulling Trackman data and benchmarking it against the pro average instead of chasing a new grip every week.</p>
+      <p>The biggest finding wasn't velocity. It was extension — how far out in front of the rubber the ball is released. Mine measured around five-foot-one; the MLB average sits closer to six-foot-two. That's not a strength problem, it's a setup problem, and it pointed straight at a free adjustment: shifting my position on the rubber to buy back distance I was leaving on the table every pitch.</p>
+      <p>That process — moving more efficiently, managing workload instead of guessing, and building a full arsenal on purpose — is what got me signed to play professionally after the year I'd basically already decided I was done. It's the same process this program walks your pitcher through.</p>
+    </div>
+    <div class="stat-box">
+      <div class="stat">
+        <div class="big">5'1&Prime; → 6'2&Prime;</div>
+        <div class="label">My extension vs. the MLB average — identified via Trackman as the top mechanical leverage point</div>
+      </div>
+      <div class="stat">
+        <div class="big">Rubber shift</div>
+        <div class="label">The specific, no-cost adjustment that followed from the data</div>
+      </div>
+      <div class="stat">
+        <div class="big">5 yrs → Signed</div>
+        <div class="label">Five unspectacular college seasons, a year away from the game, then signed professionally</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COACHES ============ -->
+<section class="coaches" id="coaches">
+  <div class="section-head" style="max-width:var(--maxw); margin-left:auto; margin-right:auto;">
+    <h2>Meet the coaches.</h2>
+    <p>Two coaches, one process — video-based movement assessment, workload tracking, and arsenal planning applied to every athlete we work with.</p>
+  </div>
+
+  <div class="coach-grid">
+    <div class="coach-card">
+      <img class="coach-photo" src="dawson.jpg" alt="Dawson Netz">
+      <div class="coach-body">
+        <h3>Dawson Netz</h3>
+        <span class="role">Co-Founder &amp; Pitching Coach</span>
+        <p>Dawson spent five years playing college baseball, stepped away for a year, then rebuilt his own delivery and arsenal using video and Trackman data — a process that got him signed to play professionally. He applies the same data-driven, no-wasted-motion approach to every pitcher he coaches remotely.</p>
+      </div>
+    </div>
+
+    <div class="coach-card">
+      <img class="coach-photo" src="owen.jpg" alt="Owen Cuffe">
+      <div class="coach-body">
+        <h3>Owen Cuffe</h3>
+        <span class="role">Co-Founder &amp; Pitching Coach</span>
+        <p>[Owen's playing background, coaching experience, and credentials go here — send this over and it'll drop right in.]</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOOK ============ -->
+<section class="book" id="book">
+  <div class="section-head">
+    <h2>Book your movement screen.</h2>
+    <p>Every new player starts with a free one-hour Zoom call — a movement screen on video, plus a conversation about throwing history, current season, and any physical constraints we should build around.</p>
+  </div>
+
+  <div class="calendly-wrap">
+    <!-- TODO: replace the data-url below with your real Calendly event link
+         (Calendly's free plan supports a 1-hour event type). -->
+    <div class="calendly-inline-widget" data-url="https://calendly.com/your-link/movement-screen" style="min-width:280px;height:700px;"></div>
+  </div>
+  <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+  <p class="book-fallback">Having trouble with the scheduler? Email <a href="mailto:hello@example.com">hello@example.com</a> and we'll find a time.</p>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="logo">NETZ<span>PITCHING</span></div>
+    <div class="socials">
+      <a href="#" aria-label="Instagram">Instagram</a>
+      <a href="#" aria-label="TikTok">TikTok</a>
+      <a href="#" aria-label="Twitter">Twitter</a>
+    </div>
+  </div>
+  <p class="fine">© <span id="year"></span> Netz Pitching Development. Remote coaching for high school and college pitchers.</p>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const toggle = document.getElementById('menuToggle');
+  toggle.addEventListener('click', () => {
+    const open = document.body.classList.toggle('menu-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  document.querySelectorAll('nav.links a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.body.classList.remove('menu-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+
+</body>
+</html>
