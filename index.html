@@ -10,15 +10,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;600;700;800;900&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#0B0B0C;
-    --ink-2:#141415;
-    --panel:#18191A;
-    --chalk:#F5F6F6;
-    --chalk-dim:#AEB4B4;
+    --ink:#FFFFFF;
+    --ink-2:#F4F5F5;
+    --panel:#F1F2F2;
+    --chalk:#13161A;
+    --chalk-dim:#4B5563;
     --clay:#F5316F;
     --clay-bright:#FF5C93;
     --lume:#22D3C5;
-    --steel:#2A2D2E;
+    --lume-deep:#0F766E;
+    --mist:#C7CCCB;
+    --steel:#CDD1D0;
     --steel-line: rgba(34,211,197,0.18);
     --maxw: 1120px;
     --pad: clamp(20px, 5vw, 64px);
@@ -59,18 +61,10 @@
     padding:0 var(--pad);
   }
 
-  .eyebrow-num{
-    font-family:'Big Shoulders Display', sans-serif;
-    font-weight:700;
-    color:var(--lume);
-    font-size:14px;
-    letter-spacing:0.08em;
-  }
-
   /* ---------- HEADER ---------- */
   header{
     position:sticky; top:0; z-index:50;
-    background:rgba(13,18,16,0.92);
+    background:rgba(255,255,255,0.92);
     backdrop-filter:blur(6px);
     border-bottom:1px solid var(--steel);
   }
@@ -90,7 +84,7 @@
     letter-spacing:0.02em;
     white-space:nowrap;
   }
-  .logo span{ color:var(--lume); }
+  .logo span{ color:var(--lume-deep); }
   nav.links{
     display:flex;
     align-items:center;
@@ -117,12 +111,12 @@
   }
   .btn-primary{
     background:var(--clay);
-    color:var(--chalk);
+    color:#FFFFFF;
   }
   .btn-primary:hover{ background:var(--clay-bright); transform:translateY(-1px); }
   .btn-ghost{
-    border-color:var(--steel);
-    color:var(--chalk);
+    border-color:rgba(255,255,255,0.4);
+    color:var(--ink);
   }
   .btn-ghost:hover{ border-color:var(--lume); color:var(--lume); }
 
@@ -137,7 +131,11 @@
   .hero{
     position:relative;
     overflow:hidden;
-    padding:96px var(--pad) 76px;
+    min-height:640px;
+    padding:72px var(--pad);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
     background:
       radial-gradient(ellipse 900px 500px at 82% -10%, rgba(245,49,111,0.16), transparent 60%),
       linear-gradient(100deg, rgba(11,11,12,0.93) 15%, rgba(11,11,12,0.65) 100%),
@@ -149,17 +147,10 @@
     position:relative;
     z-index:2;
   }
-  .hero svg.trail{
-    position:absolute;
-    top:-40px; right:-60px;
-    width:640px; max-width:70vw;
-    z-index:1;
-    opacity:0.5;
-  }
   .hero h1{
-    font-size:clamp(40px, 6.4vw, 76px);
-    max-width:14ch;
-    color:var(--chalk);
+    font-size:clamp(40px, 6.5vw, 74px);
+    max-width:18ch;
+    color:var(--ink);
   }
   .hero h1 em{
     font-style:normal;
@@ -169,19 +160,13 @@
     margin-top:26px;
     max-width:52ch;
     font-size:19px;
-    color:var(--chalk-dim);
-  }
-  .hero .actions{
-    margin-top:38px;
-    display:flex;
-    gap:16px;
-    flex-wrap:wrap;
+    color:var(--mist);
   }
   .hero .pillars{
     margin-top:64px;
     display:flex;
     gap:0;
-    border-top:1px solid var(--steel);
+    border-top:1px solid rgba(255,255,255,0.25);
     padding-top:22px;
     flex-wrap:wrap;
   }
@@ -190,7 +175,7 @@
     padding:6px 24px 6px 0;
     font-size:14.5px;
     font-weight:600;
-    color:var(--chalk-dim);
+    color:var(--mist);
     border-left:2px solid var(--steel-line);
     padding-left:16px;
     transition:color .15s ease, border-color .15s ease;
@@ -321,7 +306,7 @@
   .case-copy .name-tag{
     font-size:14px;
     letter-spacing:0.03em;
-    color:var(--lume);
+    color:var(--lume-deep);
     font-weight:600;
     margin-bottom:14px;
     display:block;
@@ -342,7 +327,7 @@
     font-family:'Big Shoulders Display', sans-serif;
     font-weight:800;
     font-size:30px;
-    color:var(--lume);
+    color:var(--lume-deep);
     line-height:1;
   }
   .stat-box .stat .label{
@@ -390,7 +375,7 @@
   }
   .coach-card p{
     font-size:15px;
-    color:#34383A;
+    color:var(--mist);
   }
 
   /* ---------- BOOK ---------- */
@@ -415,7 +400,7 @@
     font-size:14.5px;
     color:var(--chalk-dim);
   }
-  .book-fallback a{ color:var(--lume); font-weight:600; }
+  .book-fallback a{ color:var(--lume-deep); font-weight:600; }
 
   /* ---------- FOOTER ---------- */
   footer{
@@ -434,11 +419,11 @@
   .footer-inner .logo{ font-size:18px; }
   .socials{ display:flex; gap:22px; }
   .socials a{ font-size:14px; color:var(--chalk-dim); }
-  .socials a:hover{ color:var(--lume); }
+  .socials a:hover{ color:var(--lume-deep); }
   footer .fine{
     margin-top:26px;
     font-size:12.5px;
-    color:var(--steel);
+    color:var(--chalk-dim);
     max-width:var(--maxw);
     margin-left:auto; margin-right:auto;
   }
@@ -454,6 +439,7 @@
     .coach-grid{ grid-template-columns:1fr; }
   }
   @media (max-width:760px){
+    .hero{ min-height:480px; }
     nav.links{ display:none; }
     .menu-toggle{ display:inline-flex; }
     body.menu-open nav.links{
@@ -472,7 +458,6 @@
       padding:14px var(--pad);
       border-bottom:1px solid var(--steel);
     }
-    .hero svg.trail{ opacity:0.28; }
     .hero .pillars{ flex-direction:column; }
     .hero .pillars a{ border-left:none; border-top:1px solid var(--steel-line); padding:14px 0 0; }
     .hero .pillars a:first-child{ border-top:none; }
@@ -480,21 +465,7 @@
 
   @media (prefers-reduced-motion: reduce){
     html{ scroll-behavior:auto; }
-    .trail path{ stroke-dashoffset:0 !important; animation:none !important; }
-    .trail circle{ opacity:1 !important; animation:none !important; }
   }
-
-  .trail path{
-    stroke-dasharray:900;
-    stroke-dashoffset:900;
-    animation:draw 1.6s ease-out 0.2s forwards;
-  }
-  .trail circle{
-    opacity:0;
-    animation:pop 0.5s ease-out 1.7s forwards;
-  }
-  @keyframes draw{ to{ stroke-dashoffset:0; } }
-  @keyframes pop{ to{ opacity:1; } }
 </style>
 </head>
 <body>
@@ -520,15 +491,8 @@
   <div class="hero-inner">
     <h1>Modern Tools for Your <em>Development</em>.</h1>
     <p class="sub">Objective plans for pitchers who want to push past internal ques and find external results.</p>
-    <div class="actions">
-      <a href="#book" class="btn btn-primary">Book a Movement Screen</a>
-      <a href="#case-study" class="btn btn-ghost">See the case study</a>
-    </div>
     <div class="pillars">
       <a href="#focus-areas">Moving Efficiently</a>
-      <a href="#focus-areas">Workload Management</a>
-      <a href="#focus-areas">Arsenal Development</a>
-      <a href="#return-to-throw">Return to Throw</a>
     </div>
   </div>
 </section>
