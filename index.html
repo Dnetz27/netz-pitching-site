@@ -140,7 +140,8 @@
     padding:96px var(--pad) 76px;
     background:
       radial-gradient(ellipse 900px 500px at 82% -10%, rgba(245,49,111,0.16), transparent 60%),
-      var(--ink);
+      linear-gradient(100deg, rgba(11,11,12,0.93) 15%, rgba(11,11,12,0.65) 100%),
+      url('hero-action.jpg') center 22% / cover no-repeat;
   }
   .hero-inner{
     max-width:var(--maxw);
@@ -516,10 +517,6 @@
 
 <!-- ============ HERO ============ -->
 <section class="hero">
-  <svg class="trail" viewBox="0 0 640 420" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M40 40 C 220 40, 260 220, 480 260 S 600 340, 600 380" stroke="var(--lume)" stroke-width="2.5"/>
-    <circle cx="600" cy="380" r="7" fill="var(--clay-bright)"/>
-  </svg>
   <div class="hero-inner">
     <h1>Modern Tools for Your <em>Development</em>.</h1>
     <p class="sub">Objective plans for pitchers who want to push past internal ques and find external results.</p>
