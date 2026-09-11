@@ -146,10 +146,12 @@
     margin:0 auto;
     position:relative;
     z-index:2;
+    text-align:center;
   }
   .hero h1{
     font-size:clamp(40px, 6.5vw, 74px);
     max-width:18ch;
+    margin:0 auto;
     color:var(--ink);
   }
   .hero h1 em{
@@ -157,32 +159,11 @@
     color:var(--lume);
   }
   .hero .sub{
-    margin-top:26px;
+    margin:26px auto 0;
     max-width:52ch;
     font-size:19px;
     color:var(--mist);
   }
-  .hero .pillars{
-    margin-top:64px;
-    display:flex;
-    gap:0;
-    border-top:1px solid rgba(255,255,255,0.25);
-    padding-top:22px;
-    flex-wrap:wrap;
-  }
-  .hero .pillars a{
-    flex:1 1 200px;
-    padding:6px 24px 6px 0;
-    font-size:14.5px;
-    font-weight:600;
-    color:var(--mist);
-    border-left:2px solid var(--steel-line);
-    padding-left:16px;
-    transition:color .15s ease, border-color .15s ease;
-  }
-  .hero .pillars a:first-child{ border-left:2px solid var(--steel-line); }
-  .hero .pillars a:hover{ color:var(--lume); border-left-color:var(--lume); }
-
   /* ---------- SECTION shared ---------- */
   section{ padding:88px var(--pad); }
   .section-head{
@@ -458,9 +439,6 @@
       padding:14px var(--pad);
       border-bottom:1px solid var(--steel);
     }
-    .hero .pillars{ flex-direction:column; }
-    .hero .pillars a{ border-left:none; border-top:1px solid var(--steel-line); padding:14px 0 0; }
-    .hero .pillars a:first-child{ border-top:none; }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -491,9 +469,6 @@
   <div class="hero-inner">
     <h1>Modern Tools for Your <em>Development</em>.</h1>
     <p class="sub">Objective plans for pitchers who want to push past internal ques and find external results.</p>
-    <div class="pillars">
-      <a href="#focus-areas">Moving Efficiently</a>
-    </div>
   </div>
 </section>
 
