@@ -64,8 +64,7 @@
   /* ---------- HEADER ---------- */
   header{
     position:sticky; top:0; z-index:50;
-    background:rgba(255,255,255,0.92);
-    backdrop-filter:blur(6px);
+    background:#FFFFFF;
     border-bottom:1px solid var(--steel);
   }
   .nav-wrap{
@@ -371,7 +370,7 @@
   }
   .book .section-head{ max-width:640px; margin-left:auto; margin-right:auto; text-align:center; }
   .book .section-head p{ margin-left:auto; margin-right:auto; }
-  .calendly-wrap{
+  .booking-wrap{
     max-width:760px;
     margin:0 auto;
     background:var(--ink);
@@ -379,7 +378,7 @@
     border-radius:6px;
     padding:8px;
   }
-  .calendly-inline-widget{ min-width:280px; height:700px; }
+  .booking-wrap iframe{ display:block; width:100%; }
   .book-fallback{
     text-align:center;
     margin-top:22px;
@@ -387,6 +386,40 @@
     color:var(--chalk-dim);
   }
   .book-fallback a{ color:var(--lume-deep); font-weight:600; }
+
+  /* ---------- CONTACT ---------- */
+  .contact{ background:var(--ink); }
+  .contact-form{
+    max-width:760px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+  }
+  .form-field{ display:flex; flex-direction:column; gap:6px; }
+  .form-field.full{ grid-column:1 / -1; }
+  .form-field label{
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--chalk-dim);
+  }
+  .form-field input,
+  .form-field select,
+  .form-field textarea{
+    font-family:'Work Sans', sans-serif;
+    font-size:15px;
+    padding:11px 14px;
+    border:1px solid var(--steel);
+    border-radius:3px;
+    background:var(--ink);
+    color:var(--chalk);
+  }
+  .form-field textarea{ resize:vertical; min-height:110px; }
+  .contact-form .btn{
+    grid-column:1 / -1;
+    justify-self:start;
+    border:none;
+  }
 
   /* ---------- FOOTER ---------- */
   footer{
@@ -423,6 +456,7 @@
     .phases::before{ display:none; }
     .case-grid{ grid-template-columns:1fr; gap:40px; }
     .coach-grid{ grid-template-columns:1fr; }
+    .contact-form{ grid-template-columns:1fr; }
   }
   @media (max-width:760px){
     .hero{ min-height:480px; }
@@ -461,6 +495,7 @@
       <a href="#return-to-throw">Return to Throw</a>
       <a href="#case-study">Case Study</a>
       <a href="#coaches">Coaches</a>
+      <a href="#contact">Contact</a>
     </nav>
     <div class="nav-cta" style="display:flex; align-items:center; gap:10px;">
       <a href="#book" class="btn btn-primary">Book a Call</a>
@@ -618,13 +653,82 @@
     <p>Every new player starts with a Zoom call — a movement screen, conversation about throwing history, and any physical constraints/injuries.</p>
   </div>
 
-  <div class="calendly-wrap">
-    <!-- TODO: replace the data-url below with your real Calendly event link
-         (Calendly's free plan supports a 1-hour event type). -->
-    <div class="calendly-inline-widget" data-url="https://calendly.com/your-link/movement-screen" style="min-width:280px;height:700px;"></div>
+  <div class="booking-wrap">
+    <!-- TODO: replace the src below with your own Google Calendar appointment schedule link.
+         In Google Calendar: create an Appointment Schedule under your calendar, open its
+         booking page, and use "Share" -> "Embed on my website" to get your iframe src URL. -->
+    <iframe src="https://calendar.google.com/calendar/appointments/schedules/YOUR-SCHEDULE-ID?gv=true"
+            style="border:0" width="100%" height="700" frameborder="0"></iframe>
   </div>
-  <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
   <p class="book-fallback">Having trouble with the scheduler? Email <a href="mailto:hello@example.com">hello@example.com</a> and we'll find a time.</p>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <div class="section-head" style="max-width:640px; margin-left:auto; margin-right:auto; text-align:center;">
+    <h2>Get in touch.</h2>
+    <p style="margin-left:auto; margin-right:auto;">Tell us a bit about the player and what you're looking for, and we'll follow up directly.</p>
+  </div>
+
+  <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <input type="hidden" name="_subject" value="New Remote Pitching Lab inquiry">
+
+    <div class="form-field">
+      <label for="cf-name">Name</label>
+      <input type="text" id="cf-name" name="Name" required>
+    </div>
+
+    <div class="form-field">
+      <label for="cf-email">Email</label>
+      <input type="email" id="cf-email" name="Email" required>
+    </div>
+
+    <div class="form-field">
+      <label for="cf-phone">Phone Number</label>
+      <input type="tel" id="cf-phone" name="Phone">
+    </div>
+
+    <div class="form-field">
+      <label for="cf-age">Age</label>
+      <input type="number" id="cf-age" name="Age" min="1" max="99">
+    </div>
+
+    <div class="form-field">
+      <label for="cf-level">Level of Play</label>
+      <select id="cf-level" name="Level of Play" required>
+        <option value="" disabled selected>Select one</option>
+        <option>Youth</option>
+        <option>High School</option>
+        <option>College</option>
+        <option>Professional</option>
+      </select>
+    </div>
+
+    <div class="form-field">
+      <label for="cf-source">How did you hear about us?</label>
+      <select id="cf-source" name="How did you hear about us">
+        <option value="" disabled selected>Select one</option>
+        <option>Instagram</option>
+        <option>TikTok</option>
+        <option>Twitter / X</option>
+        <option>Google Search</option>
+        <option>Referral from a friend or coach</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div class="form-field full">
+      <label for="cf-timeline">Timeline</label>
+      <input type="text" id="cf-timeline" name="Timeline" placeholder="e.g. this offseason, before next spring...">
+    </div>
+
+    <div class="form-field full">
+      <label for="cf-goals">Goals</label>
+      <textarea id="cf-goals" name="Goals" placeholder="What are you hoping to work on or achieve?"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Send Message</button>
+  </form>
 </section>
 
 <footer>
