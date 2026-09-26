@@ -363,32 +363,8 @@
     color:var(--mist);
   }
 
-  /* ---------- BOOK ---------- */
-  .book{
-    background:var(--panel);
-    border-top:1px solid var(--steel);
-  }
-  .book .section-head{ max-width:640px; margin-left:auto; margin-right:auto; text-align:center; }
-  .book .section-head p{ margin-left:auto; margin-right:auto; }
-  .booking-wrap{
-    max-width:760px;
-    margin:0 auto;
-    background:var(--ink);
-    border:1px solid var(--steel);
-    border-radius:6px;
-    padding:8px;
-  }
-  .booking-wrap iframe{ display:block; width:100%; }
-  .book-fallback{
-    text-align:center;
-    margin-top:22px;
-    font-size:14.5px;
-    color:var(--chalk-dim);
-  }
-  .book-fallback a{ color:var(--lume-deep); font-weight:600; }
-
   /* ---------- CONTACT ---------- */
-  .contact{ background:var(--ink); }
+  .contact{ background:var(--panel); }
   .contact-form{
     max-width:760px;
     margin:0 auto;
@@ -420,6 +396,13 @@
     justify-self:start;
     border:none;
   }
+  .form-note{
+    grid-column:1 / -1;
+    font-size:14.5px;
+    color:var(--chalk-dim);
+    margin:0;
+  }
+  .form-note.is-error{ color:var(--clay); }
 
   /* ---------- FOOTER ---------- */
   footer{
@@ -495,10 +478,9 @@
       <a href="#return-to-throw">Return to Throw</a>
       <a href="#case-study">Case Study</a>
       <a href="#coaches">Coaches</a>
-      <a href="#contact">Contact</a>
     </nav>
     <div class="nav-cta" style="display:flex; align-items:center; gap:10px;">
-      <a href="#book" class="btn btn-primary">Book a Call</a>
+      <a href="#contact" class="btn btn-primary">Contact Us</a>
       <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
     </div>
   </div>
@@ -646,23 +628,6 @@
   </div>
 </section>
 
-<!-- ============ BOOK ============ -->
-<section class="book" id="book">
-  <div class="section-head">
-    <h2>Book your Screening</h2>
-    <p>Every new player starts with a Zoom call — a movement screen, conversation about throwing history, and any physical constraints/injuries.</p>
-  </div>
-
-  <div class="booking-wrap">
-    <!-- TODO: replace the src below with your own Google Calendar appointment schedule link.
-         In Google Calendar: create an Appointment Schedule under your calendar, open its
-         booking page, and use "Share" -> "Embed on my website" to get your iframe src URL. -->
-    <iframe src="https://calendar.google.com/calendar/appointments/schedules/YOUR-SCHEDULE-ID?gv=true"
-            style="border:0" width="100%" height="700" frameborder="0"></iframe>
-  </div>
-  <p class="book-fallback">Having trouble with the scheduler? Email <a href="mailto:hello@example.com">hello@example.com</a> and we'll find a time.</p>
-</section>
-
 <!-- ============ CONTACT ============ -->
 <section class="contact" id="contact">
   <div class="section-head" style="max-width:640px; margin-left:auto; margin-right:auto; text-align:center;">
@@ -670,7 +635,7 @@
     <p style="margin-left:auto; margin-right:auto;">Tell us a bit about the player and what you're looking for, and we'll follow up directly.</p>
   </div>
 
-  <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+  <form class="contact-form" id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
     <input type="hidden" name="_subject" value="New Remote Pitching Lab inquiry">
 
     <div class="form-field">
@@ -728,6 +693,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Send Message</button>
+    <p class="form-note" id="contact-status"></p>
   </form>
 </section>
 
@@ -758,6 +724,44 @@
       toggle.setAttribute('aria-expanded', 'false');
     });
   });
+
+  const contactForm = document.getElementById('contact-form');
+  const contactStatus = document.getElementById('contact-status');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (contactForm.action.includes('YOUR_FORM_ID')) {
+        contactStatus.textContent = 'Form is not connected yet — add your Formspree form ID.';
+        contactStatus.classList.add('is-error');
+        return;
+      }
+      contactStatus.classList.remove('is-error');
+      contactStatus.textContent = 'Sending...';
+      const data = new FormData(contactForm);
+      fetch(contactForm.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      }).then(response => {
+        if (response.ok) {
+          contactStatus.textContent = "Thanks — we've got it and will be in touch soon.";
+          contactForm.reset();
+        } else {
+          response.json().then(resData => {
+            const msg = (resData.errors || []).map(err => err.message).join(', ');
+            contactStatus.textContent = msg || 'Something went wrong — please email us directly instead.';
+            contactStatus.classList.add('is-error');
+          }).catch(() => {
+            contactStatus.textContent = 'Something went wrong — please email us directly instead.';
+            contactStatus.classList.add('is-error');
+          });
+        }
+      }).catch(() => {
+        contactStatus.textContent = 'Something went wrong — please email us directly instead.';
+        contactStatus.classList.add('is-error');
+      });
+    });
+  }
 </script>
 
 </body>
